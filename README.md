@@ -4,7 +4,7 @@ A React implementation of Wordle where you compete against an AI opponent with t
 
 live at *****
 https://wordle-game-rho-eight.vercel.app/
-*****8
+*****
 
 React
 License
