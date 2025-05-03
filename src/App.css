@@ -24,6 +24,10 @@ body {
  
   border-radius: 8px;
 }
+.player-form{
+  display: flex;
+  flex-wrap: wrap;
+}
 
 .mobile-button {
   user-select: none; /* Prevents text selection on tap */

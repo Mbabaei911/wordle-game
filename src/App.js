@@ -986,7 +986,7 @@ function App() {
             <div key={i}>{renderGuess(guess, true)}</div>
           ))}
           {!gameOver && playerGuesses.length < 6 && (
-            <form onSubmit={handlePlayerGuess}>
+            <form onSubmit={handlePlayerGuess} className="player-form">
               <input
                 type="text"
                 value={currentGuess}
