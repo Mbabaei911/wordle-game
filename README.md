@@ -1,70 +1,39 @@
-# Getting Started with Create React App
+🎮 Wordle AI Challenge
+A React implementation of Wordle where you compete against an AI opponent with three difficulty levels
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React
+License
 
-## Available Scripts
+✨ Features
+🆚 Human vs AI gameplay - Take turns guessing against a smart opponent
 
-In the project directory, you can run:
+🎚️ Three AI difficulty levels:
 
-### `npm start`
+Easy: Makes random valid guesses
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Medium: Mixes random and strategic guesses
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Hard: Uses information theory for optimal play
 
-### `npm test`
+🎨 Beautiful UI with:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Color-coded feedback (green/yellow/gray)
 
-### `npm run build`
+Responsive design for all devices
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Animated tile reveals
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+📜 5-letter word validation against a 500+ word dictionary
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+🏆 Win/lose detection with game summary
 
-### `npm run eject`
+🧠 How the AI Works
+The AI uses:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Feedback analysis from both player and AI guesses
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Probability-based elimination to narrow possible words
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Entropy calculation (information theory) to maximize information gain
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Three distinct strategies for different difficulty levels
