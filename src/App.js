@@ -810,22 +810,20 @@ function App() {
     //["present", "present", "correct", "present", "absent"] for example
   };
 
-
-
   //function to filter words
   const filterWords = (words, guess, feedback) => {
     // Filters a list of words based on Wordle feedback
     // Example: words=["CRANE","GRAPE","PLATE"], guess="CRANE", feedback=["present","absent","present","absent","correct"]
-    
+
     return words.filter((word) => {
       // Check each candidate word against the feedback rules
       // Example: word = "GRAPE"
-      
+
       for (let i = 0; i < 5; i++) {
-        const letter = guess[i];      // Current letter in guessed word
+        const letter = guess[i]; // Current letter in guessed word
         const feedbackCode = feedback[i]; // Feedback for this position
         // Example (i=0): letter="C", feedbackCode="present"
-  
+
         // Rule 1: Correct position (🟩)
         if (feedbackCode === "correct" && word[i] !== letter) {
           // Word must have this letter in exact position
@@ -833,7 +831,7 @@ function App() {
           // but word[2] is "B" → eliminate word
           return false;
         }
-  
+
         // Rule 2: Present but wrong position (🟨)
         if (feedbackCode === "present") {
           // Letter must exist in word BUT not in this position
@@ -844,20 +842,22 @@ function App() {
             return false;
           }
         }
-  
+
         // Rule 3: Absent (⬛)
         if (feedbackCode === "absent") {
           // Count how many times this letter was marked 🟩/🟨 in feedback
           const presentCount = feedback.filter(
-            (val, idx) => guess[idx] === letter && 
-            (val === "correct" || val === "present")
+            (val, idx) =>
+              guess[idx] === letter && (val === "correct" || val === "present")
           ).length;
           // Example: If guess has two "P"s marked 🟨 and 🟩 → presentCount=2
-  
+
           // Count how many times letter appears in candidate word
-          const letterCountInWord = word.split("").filter((l) => l === letter).length;
+          const letterCountInWord = word
+            .split("")
+            .filter((l) => l === letter).length;
           // Example: word="APPLE" → "P" appears 2 times
-  
+
           // If word has more copies than feedback suggests, eliminate
           if (letterCountInWord > presentCount) {
             // Example: presentCount=1 (one 🟨 "P"), but word has 2 "P"s → eliminate
@@ -865,17 +865,14 @@ function App() {
           }
         }
       }
-      
+
       // If all checks passed, keep this word
       return true;
     });
   };
 
-
-
-
   //On hard mode uses
-   const getOptimalGuess = (possibleWords) => {
+  const getOptimalGuess = (possibleWords) => {
     // If only 1-2 words left, return first one immediately
     // Example: possibleWords = ["apple", "grape"] → returns "apple"
     if (possibleWords.length <= 2) return possibleWords[0];
@@ -935,102 +932,113 @@ function App() {
     // Example return: "crane"
     return bestGuess;
   };
- 
 
-const renderGuess = (guess, isPlayer = false) => {
-  if (!guess) return null;
+  const renderGuess = (guess, isPlayer = false) => {
+    if (!guess) return null;
 
-  const feedback = getFeedback(guess, secretWord);
+    const feedback = getFeedback(guess, secretWord);
+
+    return (
+      <div className={`guess-row ${isPlayer ? "player-guess" : "ai-guess"}`}>
+        {guess.split("").map((letter, i) => (
+          <div key={i} className={`letter-box ${feedback[i]}`}>
+            {letter}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  //JSX
 
   return (
-    <div className={`guess-row ${isPlayer ? "player-guess" : "ai-guess"}`}>
-      {guess.split("").map((letter, i) => (
-        <div key={i} className={`letter-box ${feedback[i]}`}>
-          {letter}
+    <div className="App">
+      <h1>Wordle Challenge</h1>
+      <div className="game-info">
+        <div>
+          <label>Player Name: </label>
+          <input
+            type="text"
+            value={playerName}
+            onChange={(e) => setPlayerName(e.target.value)}
+            placeholder="Your name"
+          />
         </div>
-      ))}
+        <div>
+          <label>Difficulty: </label>
+          <select
+            value={difficulty}
+            onChange={(e) => setDifficulty(e.target.value)}
+            disabled={playerGuesses.length > 0}
+          >
+            <option value={DIFFICULTY.EASY}>Easy</option>
+            <option value={DIFFICULTY.MEDIUM}>Medium</option>
+            <option value={DIFFICULTY.HARD}>Hard</option>
+          </select>
+        </div>
+        <button onClick={startNewGame}>New Game</button>
+      </div>
+
+      <div className="game-container">
+        <div className="player-section">
+          <h2>{playerName || "Player"}</h2>
+          {playerGuesses.map((guess, i) => (
+            <div key={i}>{renderGuess(guess, true)}</div>
+          ))}
+          {!gameOver && playerGuesses.length < 6 && (
+            <form onSubmit={handlePlayerGuess}>
+              <input
+                type="text"
+                value={currentGuess}
+                onChange={(e) => setCurrentGuess(e.target.value.toUpperCase())}
+                maxLength={5}
+                pattern="[A-Za-z]{5}"
+                title="5-letter word"
+                required
+                placeholder="Enter guess"
+                inputMode="text"
+                autoCapitalize="characters"
+                className="mobile-input"
+                autoFocus 
+              />
+              <button type="submit"  className="mobile-button">Guess</button>
+            </form>
+          )}
+        </div>
+
+        <div className="ai-section">
+          <h2>AI Opponent</h2>
+          {aiGuesses.map((guess, i) => (
+            <div key={i}>{renderGuess(guess)}</div>
+          ))}
+        </div>
+      </div>
+
+      {gameOver && (
+        <div className="game-over">
+          <h2>
+            {winner === "player"
+              ? `🎉 ${playerName || "Player"} Wins!`
+              : "🤖 AI Wins!"}
+          </h2>
+          <p>
+            The word was: <strong>{secretWord}</strong>
+          </p>
+          <button onClick={startNewGame}>Play Again</button>
+        </div>
+      )}
+
+      {playerGuesses.length >= 6 && !gameOver && (
+        <div className="game-over">
+          <h2>😢 Game Over - No Winner</h2>
+          <p>
+            The word was: <strong>{secretWord}</strong>
+          </p>
+          <button onClick={startNewGame}>Try Again</button>
+        </div>
+      )}
     </div>
   );
-};
-
-//JSX
-
-return (
-  <div className="App">
-    <h1>Wordle Challenge</h1>
-    <div className="game-info">
-      <div>
-        <label>Player Name: </label>
-        <input
-          type="text"
-          value={playerName}
-          onChange={(e) => setPlayerName(e.target.value)}
-          placeholder="Your name"
-        />
-      </div>
-      <div>
-        <label>Difficulty: </label>
-        <select
-          value={difficulty}
-          onChange={(e) => setDifficulty(e.target.value)}
-          disabled={playerGuesses.length > 0}
-        >
-          <option value={DIFFICULTY.EASY}>Easy</option>
-          <option value={DIFFICULTY.MEDIUM}>Medium</option>
-          <option value={DIFFICULTY.HARD}>Hard</option>
-        </select>
-      </div>
-      <button onClick={startNewGame}>New Game</button>
-    </div>
-
-    <div className="game-container">
-      <div className="player-section">
-        <h2>{playerName || "Player"}</h2>
-        {playerGuesses.map((guess, i) => (
-          <div key={i}>{renderGuess(guess, true)}</div>
-        ))}
-        {!gameOver && playerGuesses.length < 6 && (
-          <form onSubmit={handlePlayerGuess}>
-            <input
-              type="text"
-              value={currentGuess}
-              onChange={(e) => setCurrentGuess(e.target.value.toUpperCase())}
-              maxLength={5}
-              pattern="[A-Za-z]{5}"
-              title="5-letter word"
-              required
-              placeholder="Enter guess"
-            />
-            <button type="submit">Guess</button>
-          </form>
-        )}
-      </div>
-
-      <div className="ai-section">
-        <h2>AI Opponent</h2>
-        {aiGuesses.map((guess, i) => (
-          <div key={i}>{renderGuess(guess)}</div>
-        ))}
-      </div>
-    </div>
-
-    {gameOver && (
-      <div className="game-over">
-        <h2>{winner === "player" ? `🎉 ${playerName || "Player"} Wins!` : "🤖 AI Wins!"}</h2>
-        <p>The word was: <strong>{secretWord}</strong></p>
-        <button onClick={startNewGame}>Play Again</button>
-      </div>
-    )}
-
-    {playerGuesses.length >= 6 && !gameOver && (
-      <div className="game-over">
-        <h2>😢 Game Over - No Winner</h2>
-        <p>The word was: <strong>{secretWord}</strong></p>
-        <button onClick={startNewGame}>Try Again</button>
-      </div>
-    )}
-  </div>
-);
 }
 
 export default App;

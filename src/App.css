@@ -6,6 +6,7 @@ body {
   min-height: 100vh;
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overscroll-behavior-y: contain; /* Prevents pull-to-refresh */
 }
 
 .App {
@@ -18,7 +19,84 @@ body {
   backdrop-filter: blur(2px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
+/* Mobile-first styles */
+.mobile-input {
+ 
+  border-radius: 8px;
+}
 
+.mobile-button {
+  user-select: none; /* Prevents text selection on tap */
+}
+
+
+.letter-box {
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+}
+
+/* Larger screens */
+@media (min-width: 768px) {
+  .letter-box {
+    width: 50px;
+    height: 50px;
+    font-size: 1.8rem;
+  }
+}
+
+/* Game container adjustments */
+.game-container {
+  flex-direction: column;
+  padding: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .game-container {
+    flex-direction: row;
+    padding: 1.5rem;
+  }
+}
+
+/* Input field sizing */
+form input {
+  font-size: 1rem;
+  padding: 0.8rem;
+}
+
+@media (min-width: 768px) {
+  form input {
+    font-size: 1.2rem;
+    padding: 1rem;
+  }
+}
+
+button {
+  min-width: 80px;
+  padding: 12px;
+  font-size: 1rem;
+  touch-action: manipulation; /* Prevents double-tap zoom */
+}
+
+/* Prevent zoom on input focus */
+input {
+  font-size: 16px; /* Prevent iOS zoom */
+}
+/* For very small devices */
+@media (max-width: 400px) {
+  .letter-box {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+  }
+  .game-info {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  button {
+    width: 100%;
+  }
+}
 
 h1 {
   color: #3a3a3a;
