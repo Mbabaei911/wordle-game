@@ -273,3 +273,76 @@ form input {
   }
 }
 
+
+
+
+
+
+/* Game Control Container */
+.game-control-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 16px;
+  border: 1px solid #e0e0e0;
+}
+
+/* Control Group (wraps label + input) */
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Labels */
+.control-label {
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Text Input */
+.control-input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  min-width: 120px;
+}
+
+/* Select Dropdown */
+.control-select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+/* Disabled Select */
+.control-select:disabled {
+  background-color: #f8f8f8;
+  cursor: not-allowed;
+}
+
+/* Button */
+.control-button {
+  padding: 8px 16px;
+  background-color:rgb(112, 110, 216);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.control-button:hover {
+  background-color:rgb(65, 40, 207);
+}
